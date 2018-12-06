@@ -3,10 +3,6 @@ from django.shortcuts import render, get_object_or_404
 from .models import Mineral
 
 
-def show(request, object_id):
-   object = Mineral.objects.filter(id=object_id).values()
-   return render_to_response('minerals/mineral_detail.html', {'object': object})
-
 def mineral_list(request):
     minerals = Mineral.objects.all()
     return render(request, 'minerals/mineral_list.html', {'minerals': minerals})
@@ -14,4 +10,6 @@ def mineral_list(request):
 
 def mineral_details(request, pk):
     mineral = get_object_or_404(Mineral, pk=pk)
-    return render(request, 'minerals/mineral_details.html', {'mineral': mineral})
+    fields = [field.name for field in Mineral._meta.get_fields()]
+    fields = [entry for entry in fields if entry not in ('id', 'name', 'image_filename', 'image_caption')]
+    return render(request, 'minerals/mineral_details.html', {'mineral': mineral, 'fields': fields,})

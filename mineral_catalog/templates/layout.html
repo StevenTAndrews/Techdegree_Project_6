@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 
+{% load mineral_extras %}
 {% load static from staticfiles %}
+
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -15,7 +17,7 @@
 <body>
   <div class="bounds">
     <div class="grid-100">
-      <a href="{% url 'Home' %}">
+      <a href="{% url 'minerals:list' %}">
         <svg class="logo" viewBox="0 0 127.6 84.8" preserveAspectRation="xMinYMin meet">
           <polygon points="42.7,84.8 49.6,79.4 40,62.5 51.2,43.5 51.2,43.5 25,0 0,55.6 "/>
           <polygon class="logo--middle" points="52.9,79.5 52.9,79.5 84.8,80.1 59.7,35 43.3,62.4 "/>
@@ -28,7 +30,8 @@
       {% block content %}
       {% endblock %}
   <div class="minerals__random">
-    <a class="minerals__anchor" href="#">Show random mineral</a>
+    {% random_pk as pk %}
+    <a class="minerals__anchor" href="{% url 'minerals:details' pk=pk %}">Show random mineral</a>
   </div>
 </body>
 </html>

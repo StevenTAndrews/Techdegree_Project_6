@@ -12,11 +12,13 @@
       </div>
       <div class="mineral__table-container">
         <table class="mineral__table">
-          {% for key, value in instance.items %}
-          <tr>
-            <td class="mineral__category">{{ key }}</td>
-            <td>{{ value }}</td>
-          </tr>
+          {% for field in fields %}
+            {% if mineral|getattribute:field %}
+              <tr>
+                <td class="mineral__category">{{ mineral|fieldname:field|title }}</td>
+                <td>{{ mineral|getattribute:field|safe }}</td>
+              </tr>
+            {% endif %}
           {% endfor %}
         </table>
       </div>
